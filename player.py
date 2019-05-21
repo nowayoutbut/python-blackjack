@@ -23,3 +23,8 @@ class Player:
     def show(self)->List[str]:
         return seq(self._cards).map(lambda card: card["symbol"]+" "+card["num"]).to_list()
     
+
+class Dealer(Player):
+    def empty(self):
+        pass
+
