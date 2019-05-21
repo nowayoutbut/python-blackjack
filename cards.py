@@ -19,8 +19,8 @@ points = [
 ]
 
 
-def createCards(symbol):
+def addSymbols(symbol):
     return seq(points).map(lambda point: {**point, "symbol": symbol})
 
-cards = seq(symbols).map(createCards).flatten().to_list()
+cards = seq(symbols).map(addSymbols).flatten().to_list()
 random.shuffle(cards)
