@@ -2,10 +2,11 @@ from typing import List
 from functional import seq
 
 class Player:
-    _cards:List[object] = []
+    _cards:List[object]
     state = "pending"
 
     def __init__(self,cards)->None:
+        self._cards = []
         self.draw(cards, 2)
 
     
