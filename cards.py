@@ -1,5 +1,12 @@
 from functional import seq
+from typing import List
+from mypy_extensions import TypedDict
 import random
+
+class Card(TypedDict):
+    num: str
+    symbol: str
+    point: int
 
 symbols = ["Heart", "Spade", "Diamond", "Clover"]
 points = [
@@ -19,8 +26,8 @@ points = [
 ]
 
 
-def addSymbols(symbol):
+def addSymbols(symbol)->List[Card]:
     return seq(points).map(lambda point: {**point, "symbol": symbol})
 
-cards = seq(symbols).map(addSymbols).flatten().to_list()
+cards:List[Card] = seq(symbols).map(addSymbols).flatten().to_list()
 random.shuffle(cards)
