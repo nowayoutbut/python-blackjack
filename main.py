@@ -1,11 +1,11 @@
 from cards import cards
-from player import Player
+from player import Player,Dealer
 
 
-user = Player(cards)
+player = Player(cards)
+dealer = Dealer(cards)
 
-
-def showYourCards(player:Player)->None:
+def showCards(player:Player)->None:
     print(">>"+"\n>>".join(player.show()))
     
     print(">>")
@@ -14,18 +14,41 @@ def showYourCards(player:Player)->None:
     print(">>total: "+str(total))
 
 
-while user.state == "pending":
-    showYourCards(user)
+while player.state == "pending" or dealer.state == "pending":
+    showCards(player)
     take = input('do you take a card ? Y/n >> ')
 
     if(take == "Y"):
-        user.draw(cards)
-        total = user.total        
+        player.draw(cards)
+        total = player.total        
         if(total > 21):
-           user.state = "break"
-           print("your cards total point is >>> "+str(total))
-           print('You Lose...')
+           player.state = "break"
 
     elif(take == "n"):
-        user.state="break"
-     
+        player.state="break"
+    
+    if(dealer.total < 21):
+        print("Dealer take a card......")
+        dealer.draw(cards)
+
+        if(dealer.total > 21):
+            dealer.state = "break"
+    else:
+        dealer.state = "break"
+
+
+dealer_point = 21 - dealer.total 
+player_point = 21 - player.total
+
+print("Dealer total is "+str(dealer.total))
+print("Your total is "+str(player.total))
+
+if(dealer_point < 0 and player_point < 0):
+    print(">>> This Game is draw")
+elif(dealer_point >= 0 and player_point < 0):
+    print(">>> You Lose......")
+
+elif(dealer_point >= 0 and player_point >=0 and dealer_point <= player_point):
+    print(">>> You Loose......")
+else:
+    print(">>> You Win!")
